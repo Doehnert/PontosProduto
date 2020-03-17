@@ -70,8 +70,34 @@ class InstallData implements InstallDataInterface
                 'apply_to' => 'simple',
             ]
         );
+        // fator de conversão entre os pontos e o valor em dinheiro, cada pontos_valor vale quanto em dinheiro
+        $eavSetup->addAttribute(
+            Product::ENTITY,
+            'pontos_valor',
+            [
+                'type' => 'decimal',
+                'backend' => '',
+                'frontend' => '',
+                'label' => 'pontos_valor',
+                'input' => 'text',
+                'class' => '',
+                'source' => '',
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                'visible' => true,
+                'required' => false,
+                'user_defined' => true,
+                'default' => '',
+                'searchable' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'used_in_product_listing' => true,
+                'unique' => false,
+                'apply_to' => 'simple',
+            ]
+        );
 
-         $setup->endSetup();
+        $setup->endSetup();
 
     }
 }
