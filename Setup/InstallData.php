@@ -49,7 +49,8 @@ class InstallData implements InstallDataInterface
             Product::ENTITY,
             'pontos_produto',
             [
-                'type' => 'decimal',
+                'type' => 'int',
+                'default' => 0,
                 'backend' => '',
                 'frontend' => '',
                 'label' => 'pontos_produto',
@@ -60,7 +61,6 @@ class InstallData implements InstallDataInterface
                 'visible' => true,
                 'required' => false,
                 'user_defined' => true,
-                'default' => '',
                 'searchable' => false,
                 'filterable' => false,
                 'comparable' => false,
@@ -68,17 +68,22 @@ class InstallData implements InstallDataInterface
                 'used_in_product_listing' => true,
                 'unique' => false,
                 'apply_to' => 'simple',
+                'visible'                   => true,
+                'is_html_allowed_on_front'  => true,
+                'visible_on_front'          => true
             ]
         );
-        // fator de conversão entre os pontos e o valor em dinheiro, cada pontos_valor vale quanto em dinheiro
+
+        // fator de conversão entre os pontos e o valor em dinheiro, cada pontuacao vale quanto em dinheiro
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'pontos_valor',
+            'pontuacao',
             [
-                'type' => 'decimal',
+                'type' => 'int',
+                'default' => 0,
                 'backend' => '',
                 'frontend' => '',
-                'label' => 'pontos_valor',
+                'label' => 'pontuacao',
                 'input' => 'text',
                 'class' => '',
                 'source' => '',
@@ -86,7 +91,6 @@ class InstallData implements InstallDataInterface
                 'visible' => true,
                 'required' => false,
                 'user_defined' => true,
-                'default' => '',
                 'searchable' => false,
                 'filterable' => false,
                 'comparable' => false,
@@ -94,8 +98,41 @@ class InstallData implements InstallDataInterface
                 'used_in_product_listing' => true,
                 'unique' => false,
                 'apply_to' => 'simple',
+                'visible'                   => true,
+                'is_html_allowed_on_front'  => true,
+                'visible_on_front'          => true
             ]
         );
+
+        // mostrar a pontuacao sim ou nao
+        $eavSetup->addAttribute(
+            Product::ENTITY,
+            'mostrar_pontuacao',
+            [
+                'type' => 'int',
+                'backend' => '',
+                'frontend' => '',
+                'label' => 'mostrar_pontuacao',
+                'input' => 'boolean',
+                'class' => '',
+                'source' => '',
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                'visible' => true,
+                'required' => false,
+                'user_defined' => true,
+                'default' => false,
+                'searchable' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'used_in_product_listing' => true,
+                'unique' => false,
+                'apply_to' => 'simple',
+                'visible'                   => true,
+                'is_html_allowed_on_front'  => true,
+                'visible_on_front'          => true
+            ]
+        );        
 
         $setup->endSetup();
 
