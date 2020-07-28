@@ -46,6 +46,8 @@ class CustomerGreeting implements CustomerGreetingInterface
         $cabeca = $objectManager->create('Magento\Framework\App\RequestInterface');
 
         $autorizacao = $cabeca->getHeader('Authorization');
+        $autorizacao = explode(" ", $autorizacao);
+        $autorizacao = $autorizacao[1];
         $status = 'success';
 
         if ($autorizacao == $this->senha){
@@ -65,7 +67,7 @@ class CustomerGreeting implements CustomerGreetingInterface
             $msg = 'authorization';
         }
         
-        $response = ['success' => $status, 'message' => $msg];
+        $response = ['status' => $status, 'message' => $msg];
         $result = json_encode($response, JSON_UNESCAPED_SLASHES);
         return $result;
    }
