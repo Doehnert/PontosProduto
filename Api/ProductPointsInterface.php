@@ -10,7 +10,7 @@ interface ProductPointsInterface
     * @param string $sku
     * @param int $pointsValue
     * @param int $redeemValue
-    * @return $response
+    * @return string $response
     * @throws Magento\Framework\Exception\AuthorizationException If not authorized
     * @throws \Magento\Framework\Exception\NoSuchEntityException If product dont exist
     */
