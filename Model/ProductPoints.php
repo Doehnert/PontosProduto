@@ -1,10 +1,10 @@
 <?php
 namespace Vexpro\PontosProduto\Model;
 
-use Vexpro\PontosProduto\Api\CustomerGreetingInterface;
+use Vexpro\PontosProduto\Api\ProductPointsInterface;
 use Magento\Customer\Model\CustomerRegistry;
 
-class CustomerGreeting implements CustomerGreetingInterface
+class ProductPoints implements ProductPointsInterface
 {
    /**
     * @var CustomerRegistry
@@ -25,18 +25,18 @@ class CustomerGreeting implements CustomerGreetingInterface
    }
 
    /**
-    * Get customer's name by Customer ID and return greeting message.
+    * Set the product pontos_valor and pontuacao
     *
     * @api
     * @param string $sku
     * @param int $pointsValue
     * @param int $redeemValue
-    * @return \Magento\Customer\Api\Data\CustomerInterface
-    * @throws \Magento\Framework\Exception\NoSuchEntityException If customer with the specified ID does not exist.
-    * @throws \Magento\Framework\Exception\LocalizedException
+    * @return $response
+    * @throws Magento\Framework\Exception\AuthorizationException If not authorized
+    * @throws \Magento\Framework\Exception\NoSuchEntityException If product dont exist
     */
 
-   public function sayHello($sku, $pointsValue, $redeemValue)
+   public function changePoints($sku, $pointsValue, $redeemValue)
    {
 
         //Get Object Manager Instance
@@ -50,21 +50,21 @@ class CustomerGreeting implements CustomerGreetingInterface
         $autorizacao = $autorizacao[1];
         $status = 'success';
 
-        if ($autorizacao == $this->senha){
-            $msg = $sku;
-            try {
-                $product = $this->productRepository->get($sku);
-                $product->setCustomAttribute('pontos_produto', $pointsValue);
-                $product->setCustomAttribute('pontuacao', $redeemValue);
-                $product->save();
-            } catch (Exception $e){
-                $status = 'error';
-                $msg = 'Product not found';
-            }
-            
-        } else {
-            $status = 'error';
-            $msg = 'authorization';
+        if ($autorizacao != $this->senha)
+        {
+            throw new \Magento\Framework\Exception\AuthorizationException(
+                __(\Magento\Framework\Exception\AuthorizationException::NOT_AUTHORIZED)
+            );
+        }
+
+        $msg = $sku;
+        try {
+            $product = $this->productRepository->get($sku);
+            $product->setCustomAttribute('pontos_produto', $pointsValue);
+            $product->setCustomAttribute('pontuacao', $redeemValue);
+            $product->save();
+        } catch (Exception $e){
+            return;
         }
         
         $response = ['status' => $status, 'message' => $msg];
