@@ -112,7 +112,7 @@ class InstallData implements InstallDataInterface
                 'type' => 'int',
                 'backend' => '',
                 'frontend' => '',
-                'label' => 'mostrar_pontuacao',
+                'label' => 'Mostrar parametrização de pontos',
                 'input' => 'boolean',
                 'class' => '',
                 'source' => '',
@@ -121,6 +121,36 @@ class InstallData implements InstallDataInterface
                 'required' => false,
                 'user_defined' => true,
                 'default' => false,
+                'searchable' => false,
+                'filterable' => false,
+                'comparable' => false,
+                'visible_on_front' => false,
+                'used_in_product_listing' => true,
+                'unique' => false,
+                'apply_to' => 'simple',
+                'visible'                   => true,
+                'is_html_allowed_on_front'  => true,
+                'visible_on_front'          => true
+            ]
+        );
+
+        // informa origem dos produtos
+        $eavSetup->addAttribute(
+            Product::ENTITY,
+            'origem',
+            [
+                'type' => 'int',
+                'backend' => '',
+                'frontend' => '',
+                'label' => 'origem sap?',
+                'default' => false,
+                'input' => 'boolean',
+                'class' => '',
+                // 'source' => 'Vexpro\PontosProduto\Model\Config\Source\Options',
+                'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
+                'visible' => true,
+                'required' => true,
+                'user_defined' => true,
                 'searchable' => false,
                 'filterable' => false,
                 'comparable' => false,
