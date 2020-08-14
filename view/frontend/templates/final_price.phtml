@@ -20,9 +20,10 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
 ?>
 
 <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_CompraPontos::img/ico_real.png'); ?>" />
+<span>&nbsp;&nbsp;</span>
 
 <?php if ($block->hasSpecialPrice()) :?>
-    <span class="special-price">
+    <span class="special-price" style="font-size: 15px; color: #102972; font-weight: bold;">
         <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
             'display_label'     => __('Special Price'),
             'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
@@ -31,7 +32,7 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
             'schema' => $schema
         ]); ?>
     </span>
-    <span class="old-price">
+    <span class="old-price" style="font-size: 15px; color: #102972; font-weight: bold;">
         <?= /* @noEscape */ $block->renderAmount($priceModel->getAmount(), [
             'display_label'     => __('Regular Price'),
             'price_id'          => $block->getPriceId('old-price-' . $idSuffix),
@@ -41,12 +42,14 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
         ]); ?>
     </span>
 <?php else :?>
+    <span style="font-size: 15px; color: #102972; font-weight: bold;">
     <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
         'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
         'price_type'        => 'finalPrice',
         'include_container' => true,
         'schema' => $schema
     ]); ?>
+    </span>
 <?php endif; ?>
 
 <?php if ($block->showMinimalPrice()) :?>
@@ -70,14 +73,27 @@ if ($attvalue > 0)
 {
     ?>
     <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_CompraPontos::img/ico_seed.png'); ?>" />
+    <span>&nbsp;&nbsp;</span>
+    <span class="special-price" style="font-size: 15px; color: #3351A8; font-weight: bold;">
+        <?php
+        echo ("SD$ ".round($attvalue));
+        ?>
+    </span>
     <?php
-    echo ("SD$ ".round($attvalue));
 }
 ?>
 <?php
     echo "<p>";
-    if (($_product->getCustomAttribute('mostrar_pontuacao')->getValue()) == 1){
-        echo "Você pontuará SD$ " . $_product->getCustomAttribute('pontuacao')->getValue();
+    if (($_product->getCustomAttribute('mostrar_pontuacao')->getValue()) == 1)
+    {
+        ?>
+        <span class="special-price" style="font-size: 15px; color: #3351A8; font-weight: bold;">
+            <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_PontosProduto::images/pontuara.png'); ?>" />
+            <span>&nbsp;&nbsp;</span>
+            <?php
+            echo "Você pontuará SD$ " . $_product->getCustomAttribute('pontuacao')->getValue();?>
+        </span>
+        <?php
     }
     echo "</p>";
 ?>
