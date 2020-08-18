@@ -49,6 +49,7 @@ class InstallData implements InstallDataInterface
             Product::ENTITY,
             'pontos_produto',
             [
+                'group'         => 'General',
                 'type' => 'int',
                 'default' => 0,
                 'backend' => '',
@@ -79,6 +80,7 @@ class InstallData implements InstallDataInterface
             Product::ENTITY,
             'pontuacao',
             [
+                'group'         => 'General',
                 'type' => 'int',
                 'default' => 0,
                 'backend' => '',
@@ -109,6 +111,7 @@ class InstallData implements InstallDataInterface
             Product::ENTITY,
             'mostrar_pontuacao',
             [
+                'group'         => 'General',
                 'type' => 'int',
                 'backend' => '',
                 'frontend' => '',
@@ -139,6 +142,7 @@ class InstallData implements InstallDataInterface
             Product::ENTITY,
             'origem',
             [
+                'group'         => 'General',
                 'type' => 'int',
                 'backend' => '',
                 'frontend' => '',
