@@ -1,4 +1,5 @@
 <?php
+
 namespace Vexpro\PontosProduto\Model;
 
 use Vexpro\PontosProduto\Api\ProductPointsInterface;
@@ -6,38 +7,37 @@ use Magento\Customer\Model\CustomerRegistry;
 
 class ProductPoints implements ProductPointsInterface
 {
-   /**
-    * @var CustomerRegistry
-    */
+    /**
+     * @var CustomerRegistry
+     */
 
-   private $productRepository;
-   protected $customerRegistry;
-   protected $senha;
+    private $productRepository;
+    protected $customerRegistry;
+    protected $senha;
 
-   public function __construct(
-       CustomerRegistry $customerRegistry,
-       \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
-    )
-   {
-       $this->customerRegistry = $customerRegistry;
-       $this->productRepository = $productRepository;
-       $this->senha = 'kFsrvHwmIMO5ldntjeTurBqYn1btKzbKY5PtZ8h6mdsToE15H6M54MQjyBuIomZx';
-   }
+    public function __construct(
+        CustomerRegistry $customerRegistry,
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
+    ) {
+        $this->customerRegistry = $customerRegistry;
+        $this->productRepository = $productRepository;
+        $this->senha = 'kFsrvHwmIMO5ldntjeTurBqYn1btKzbKY5PtZ8h6mdsToE15H6M54MQjyBuIomZx';
+    }
 
-   /**
-    * Set the product pontos_valor and pontuacao
-    *
-    * @api
-    * @param string $sku
-    * @param int $pointsValue
-    * @param int $redeemValue
-    * @return string $response
-    * @throws Magento\Framework\Exception\AuthorizationException If not authorized
-    * @throws \Magento\Framework\Exception\NoSuchEntityException If product dont exist
-    */
+    /**
+     * Set the product pontos_valor and pontuacao
+     *
+     * @api
+     * @param string $sku
+     * @param int $pointsValue
+     * @param int $redeemValue
+     * @return string $response
+     * @throws Magento\Framework\Exception\AuthorizationException If not authorized
+     * @throws \Magento\Framework\Exception\NoSuchEntityException If product dont exist
+     */
 
-   public function changePoints($sku, $pointsValue, $redeemValue)
-   {
+    public function changePoints($sku, $pointsValue, $redeemValue)
+    {
 
         //Get Object Manager Instance
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -50,8 +50,7 @@ class ProductPoints implements ProductPointsInterface
         $autorizacao = $autorizacao[1];
         $status = 'success';
 
-        if ($autorizacao != $this->senha)
-        {
+        if ($autorizacao != $this->senha) {
             throw new \Magento\Framework\Exception\AuthorizationException(
                 __(\Magento\Framework\Exception\AuthorizationException::NOT_AUTHORIZED)
             );
@@ -63,12 +62,12 @@ class ProductPoints implements ProductPointsInterface
             $product->setCustomAttribute('pontos_produto', $pointsValue);
             $product->setCustomAttribute('pontuacao', $redeemValue);
             $product->save();
-        } catch (Exception $e){
+        } catch (Exception $e) {
             return;
         }
-        
+
         $response = ['status' => $status, 'message' => $msg];
         $result = json_encode($response, JSON_UNESCAPED_SLASHES);
         return $result;
-   }
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
@@ -22,7 +23,7 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
 <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_CompraPontos::img/ico_real.png'); ?>" />
 <span>&nbsp;&nbsp;</span>
 
-<?php if ($block->hasSpecialPrice()) :?>
+<?php if ($block->hasSpecialPrice()) : ?>
     <span class="special-price" style="font-size: 15px; color: #102972; font-weight: bold;">
         <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
             'display_label'     => __('Special Price'),
@@ -41,60 +42,65 @@ $schema = ($block->getZone() == 'item_view') ? true : false;
             'skip_adjustments'  => true
         ]); ?>
     </span>
-<?php else :?>
+<?php else : ?>
     <span style="font-size: 15px; color: #102972; font-weight: bold;">
-    <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
-        'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
-        'price_type'        => 'finalPrice',
-        'include_container' => true,
-        'schema' => $schema
-    ]); ?>
+        <?= /* @noEscape */ $block->renderAmount($finalPriceModel->getAmount(), [
+            'price_id'          => $block->getPriceId('product-price-' . $idSuffix),
+            'price_type'        => 'finalPrice',
+            'include_container' => true,
+            'schema' => $schema
+        ]); ?>
     </span>
 <?php endif; ?>
 
-<?php if ($block->showMinimalPrice()) :?>
-    <?php if ($block->getUseLinkForAsLowAs()) :?>
+<?php if ($block->showMinimalPrice()) : ?>
+    <?php if ($block->getUseLinkForAsLowAs()) : ?>
         <a href="<?= $block->escapeUrl($block->getSaleableItem()->getProductUrl()) ?>" class="minimal-price-link">
             <?= /* @noEscape */ $block->renderAmountMinimal() ?>
         </a>
-    <?php else :?>
+    <?php else : ?>
         <span class="minimal-price-link">
             <?= /* @noEscape */ $block->renderAmountMinimal() ?>
         </span>
-    <?php endif?>
+    <?php endif ?>
 <?php endif; ?>
 
 <div>
 
-<?php
-$_product = $block->getPriceType('final_price')->getProduct();
-$attvalue = $_product->getCustomAttribute('pontos_produto')->getValue();
-if ($attvalue > 0)
-{
-    ?>
-    <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_CompraPontos::img/ico_seed.png'); ?>" />
-    <span>&nbsp;&nbsp;</span>
-    <span class="special-price" style="font-size: 15px; color: #3351A8; font-weight: bold;">
-        <?php
-        echo ("SD$ ".round($attvalue));
-        ?>
-    </span>
     <?php
-}
-?>
-<?php
+    $_product = $block->getPriceType('final_price')->getProduct();
+    $attvalue = $_product->getCustomAttribute('pontos_produto')->getValue();
+
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $scopeConfig = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
+
+    $programCurrencySymbol = $scopeConfig->getValue('acessos/general/programCurrencySymbol', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    $programCurrencyName = $scopeConfig->getValue('acessos/general/programCurrencyName', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+    if ($attvalue > 0) {
+    ?>
+        <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_CompraPontos::img/ico_seed.png'); ?>" />
+        <span>&nbsp;&nbsp;</span>
+        <span class="special-price" style="font-size: 15px; color: #3351A8; font-weight: bold;">
+            <?php
+            echo ($programCurrencySymbol . " " . round($attvalue));
+            ?>
+        </span>
+    <?php
+    }
+    ?>
+    <?php
     echo "<p>";
-    if (($_product->getCustomAttribute('mostrar_pontuacao')->getValue()) == 1)
-    {
-        ?>
+    if (($_product->getCustomAttribute('mostrar_pontuacao')->getValue()) == 1) {
+    ?>
         <span class="special-price" style="font-size: 15px; color: #3351A8; font-weight: bold;">
             <img style="display: inline;" src="<?php echo $this->getViewFileUrl('Vexpro_PontosProduto::images/pontuara.png'); ?>" />
             <span>&nbsp;&nbsp;</span>
             <?php
-            echo "Você pontuará SD$ " . $_product->getCustomAttribute('pontuacao')->getValue();?>
+            echo "Você pontuará " . $programCurrencySymbol . $_product->getCustomAttribute('pontuacao')->getValue(); ?>
         </span>
-        <?php
+    <?php
     }
     echo "</p>";
-?>
+    ?>
 </div>
