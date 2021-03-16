@@ -40,26 +40,26 @@ class Attributes extends AbstractModifier
      */
     public function modifyMeta(array $meta)
     {
-        $attribute = 'pontos_produto';
+        // $attribute = 'pontos_produto';
 
-        $path = $this->arrayManager->findPath($attribute, $meta, null, 'children');
-        if ($path) {
-            $meta = $this->arrayManager->set(
-                "{$path}/arguments/data/config/disabled",
-                $meta,
-                true
-            );
-        }
+        // $path = $this->arrayManager->findPath($attribute, $meta, null, 'children');
+        // if ($path) {
+        //     $meta = $this->arrayManager->set(
+        //         "{$path}/arguments/data/config/disabled",
+        //         $meta,
+        //         true
+        //     );
+        // }
 
-        $attribute = 'pontuacao';
-        $path = $this->arrayManager->findPath($attribute, $meta, null, 'children');
-        if ($path) {
-            $meta = $this->arrayManager->set(
-                "{$path}/arguments/data/config/disabled",
-                $meta,
-                true
-            );
-        }
+        // $attribute = 'pontuacao';
+        // $path = $this->arrayManager->findPath($attribute, $meta, null, 'children');
+        // if ($path) {
+        //     $meta = $this->arrayManager->set(
+        //         "{$path}/arguments/data/config/disabled",
+        //         $meta,
+        //         true
+        //     );
+        // }
 
         $attribute = 'origem';
         $path = $this->arrayManager->findPath($attribute, $meta, null, 'children');

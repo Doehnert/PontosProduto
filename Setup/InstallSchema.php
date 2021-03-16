@@ -1,55 +1,33 @@
 <?php
-namespace Vexpro\PontosProduto\Setup;
 
-use Magento\Eav\Setup\EavSetup;
-use Magento\Eav\Setup\EavSetupFactory;
-use Magento\Framework\Setup\InstallDataInterface;
+namespace Vexpro\Pontos\Setup;
+
+use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
 use \Magento\Catalog\Model\Product;
-use \Magento\Customer\Model\Customer;
-use Magento\Eav\Model\Config;
-use Magento\Customer\Setup\CustomerSetupFactory;
-use Magento\Eav\Model\Entity\Attribute\Set as AttributeSet;
-use Magento\Eav\Model\Entity\Attribute\SetFactory as AttributeSetFactory;
+use Magento\Eav\Setup\EavSetupFactory;
 
-class InstallData implements InstallDataInterface
+class InstallSchema implements InstallSchemaInterface
 {
     private $eavSetupFactory;
 
-    /**
-     * @var CustomerSetupFactory
-     */
-    protected $customerSetupFactory;
-
-    /**
-     * @var AttributeSetFactory
-     */
-    private $attributeSetFactory;    
-
     public function __construct(
-        EavSetupFactory $eavSetupFactory,
-        Config $eavConfig,
-        CustomerSetupFactory $customerSetupFactory,
-        AttributeSetFactory $attributeSetFactory
-    )
-    {
+        EavSetupFactory $eavSetupFactory
+    ) {
         $this->eavSetupFactory = $eavSetupFactory;
-        $this->eavConfig       = $eavConfig;
-        $this->customerSetupFactory = $customerSetupFactory;
-        $this->attributeSetFactory = $attributeSetFactory;        
     }
 
-    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
-        $setup->startSetup();
+        $installer = $setup;
 
         $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
         $eavSetup->addAttribute(
             Product::ENTITY,
             'pontos_produto',
             [
-                'group'         => 'General',
+                'group' => 'General',
                 'type' => 'int',
                 'default' => 0,
                 'backend' => '',
@@ -166,9 +144,8 @@ class InstallData implements InstallDataInterface
                 'is_html_allowed_on_front'  => true,
                 'visible_on_front'          => true
             ]
-        );        
+        );
 
-        $setup->endSetup();
-
+        $installer->endSetup();
     }
 }
