@@ -59,8 +59,8 @@ class ProductPoints implements ProductPointsInterface
         $msg = $sku;
         try {
             $product = $this->productRepository->get($sku);
-            $product->setCustomAttribute('pontos_produto', $pointsValue);
-            $product->setCustomAttribute('pontuacao', $redeemValue);
+            $product->setCustomAttribute('pontos_produto', $redeemValue);
+            $product->setCustomAttribute('pontuacao', $pointsValue);
             $product->save();
         } catch (Exception $e) {
             return;
