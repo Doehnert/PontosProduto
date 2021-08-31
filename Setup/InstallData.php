@@ -7,8 +7,10 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use \Magento\Catalog\Model\Product;
 use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\InstallDataInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
 
-class InstallSchema implements InstallSchemaInterface
+class InstallData implements InstallDataInterface
 {
     private $eavSetupFactory;
 
@@ -18,7 +20,7 @@ class InstallSchema implements InstallSchemaInterface
         $this->eavSetupFactory = $eavSetupFactory;
     }
 
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
 
