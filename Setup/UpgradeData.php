@@ -77,7 +77,7 @@ class UpgradeData implements UpgradeDataInterface
                 'source' => '',
                 'global' => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_GLOBAL,
                 'visible' => true,
-                'required' => false,
+                'required' => true,
                 'user_defined' => true,
                 'searchable' => false,
                 'filterable' => false,

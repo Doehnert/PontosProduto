@@ -80,7 +80,7 @@ class InstallSchema implements InstallSchemaInterface
                 'apply_to' => 'simple',
                 'visible'                   => true,
                 'is_html_allowed_on_front'  => true,
-                'visible_on_front'          => true
+                'visible_on_front'          => false
             ]
         );
 
@@ -111,7 +111,7 @@ class InstallSchema implements InstallSchemaInterface
                 'apply_to' => 'simple',
                 'visible'                   => true,
                 'is_html_allowed_on_front'  => true,
-                'visible_on_front'          => true
+                'visible_on_front'          => false
             ]
         );
 
@@ -143,7 +143,7 @@ class InstallSchema implements InstallSchemaInterface
                 'apply_to' => 'simple',
                 'visible'                   => true,
                 'is_html_allowed_on_front'  => true,
-                'visible_on_front'          => true
+                'visible_on_front'          => false
             ]
         );
 
